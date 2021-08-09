@@ -1,0 +1,72 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Dictionary_ExpandTemplates" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="io_dict" Type="InOutArgument(scg:Dictionary(x:String, x:Object))" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>866.4,614.4</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>Dictionary_ExpandTemplates_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Values from dictionary may reference other keys using {{key}}-templating. This function replaces this references with relevant values. Mechanism is kind of similar to interpolation {{}} in Angular JS.&#xA;&#xA;Example:&#xA;key1 = &quot;world&quot;&#xA;key2 = &quot;hello, {{key1}}!&quot;&#xA;--&gt;&#xA;key1 = &quot;world&quot;&#xA;key2 = &quot;hello, world!&quot;" DisplayName="Dictionary_ExpandTemplates" sap:VirtualizedContainerService.HintSize="375.2,445.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:InvokeCode ContinueOnError="{x:Null}" Code="'regex for finding variables in {{...}}&#xD;&#xA;Dim regexPattern As System.Text.RegularExpressions.Regex&#xD;&#xA;regexPattern = New System.Text.RegularExpressions.Regex(&#xD;&#xA;&quot;\{{2}([^{}]*)\}{2}&quot;,&#xD;&#xA;System.Text.RegularExpressions.RegexOptions.Compiled)&#xD;&#xA;&#xD;&#xA;Dim matches As System.Text.RegularExpressions.MatchCollection&#xD;&#xA;Dim match As System.Text.RegularExpressions.Match&#xD;&#xA;&#xD;&#xA;Dim updatedKeys As New HashSet(Of String)&#xD;&#xA;&#xD;&#xA;Dim valStr As String&#xD;&#xA;Dim keyToReplace As String&#xD;&#xA;Dim val As Object&#xD;&#xA;Dim round As Integer = 0&#xD;&#xA;Dim updatedKeysChanged As Boolean = False&#xD;&#xA;&#xD;&#xA;Do&#xD;&#xA;&#x9;updatedKeysChanged = False&#xD;&#xA;&#x9;&#xD;&#xA;&#x9;Dim keys As String()&#xD;&#xA;&#x9;If round = 0 Then&#xD;&#xA;&#x9;&#x9;keys = io_dict.Keys.ToArray&#xD;&#xA;&#x9;Else&#xD;&#xA;&#x9;&#x9;'successive rounds should be applied only to previously updated keys&#xD;&#xA;&#x9;&#x9;' other keys have already been tried&#xD;&#xA;&#x9;&#x9;keys = updatedKeys.ToArray&#xD;&#xA;&#x9;End If&#xD;&#xA;&#x9;&#xD;&#xA;&#x9;For Each key As String In keys&#xD;&#xA;&#x9;&#x9;val = io_dict(key)&#xD;&#xA;&#x9;&#x9;'ignore non strings (GenericValue corresponds to assets)&#xD;&#xA;&#x9;&#x9;If Not TypeOf val Is String And Not TypeOf val Is UiPath.Core.GenericValue Then&#xD;&#xA;&#x9;&#x9;&#x9;Continue For&#xD;&#xA;&#x9;&#x9;End If&#xD;&#xA;&#x9;&#x9;&#xD;&#xA;&#x9;&#x9;valStr = CType(val, String)&#xD;&#xA;&#x9;&#x9;matches = regexPattern.Matches(valStr)&#xD;&#xA;&#x9;&#x9;&#xD;&#xA;&#x9;&#x9;Dim anyReplacements As Boolean = False&#xD;&#xA;&#x9;&#x9;For Each match In matches&#xD;&#xA;&#x9;&#x9;&#x9;keyToReplace = match.Groups(1).Value&#xD;&#xA;&#x9;&#x9;&#x9;If io_dict.ContainsKey(keyToReplace) Then&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;valStr = valStr.Replace(&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;match.Groups(0).Value,&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;io_dict(keyToReplace).ToString)&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;anyReplacements = True&#xD;&#xA;&#x9;&#x9;&#x9;End If&#xD;&#xA;&#x9;&#x9;Next &#xD;&#xA;&#x9;&#x9;&#xD;&#xA;&#x9;&#x9;'---&#xD;&#xA;&#x9;&#x9;'if key has not been updated during the round,&#xD;&#xA;&#x9;&#x9;'it is not considered in the next one&#xD;&#xA;&#x9;&#x9;If anyReplacements Then&#xD;&#xA;&#x9;&#x9;&#x9;If Not updatedKeys.Contains(key) Then&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;updatedKeys.Add(key)&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;updatedKeysChanged = True&#xD;&#xA;&#x9;&#x9;&#x9;End If&#xD;&#xA;&#x9;&#x9;&#x9;io_dict(key) = valStr&#xD;&#xA;&#x9;&#x9;Else&#xD;&#xA;&#x9;&#x9;&#x9;If updatedKeys.Contains(key) Then&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;updatedKeys.Remove(key)&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;updatedKeysChanged = True&#xD;&#xA;&#x9;&#x9;&#x9;End If&#xD;&#xA;&#x9;&#x9;End If&#xD;&#xA;&#x9;&#x9;&#xD;&#xA;&#x9;Next &#xD;&#xA;&#x9;&#xD;&#xA;&#x9;round = round + 1&#xD;&#xA;&#x9;&#xD;&#xA;Loop While round &lt; in_maxRounds And updatedKeys.Count &gt; 0 And updatedKeysChanged&#xD;&#xA;&#xD;&#xA;If updatedKeys.Count &gt; 0 Then&#xD;&#xA;&#x9;Throw New Exception(&quot;Template contain cyclic references, which cannot be resolved. Please review keys:&quot;+&#xD;&#xA;&#x9;String.Join(&quot;,&quot;, updatedKeys))&#xD;&#xA;End If&#xD;&#xA;" DisplayName="Invoke code: expand templates" sap:VirtualizedContainerService.HintSize="333.6,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+      <ui:InvokeCode.Arguments>
+        <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="io_dict">[io_dict]</InOutArgument>
+        <InArgument x:TypeArguments="x:Int32" x:Key="in_maxRounds">20</InArgument>
+      </ui:InvokeCode.Arguments>
+    </ui:InvokeCode>
+  </Sequence>
+</Activity>

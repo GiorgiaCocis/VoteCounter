@@ -1,0 +1,105 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Template_ReplaceVariables" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="out_res" Type="OutArgument(x:String)" />
+    <x:Property Name="in_template" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="give variable names only if a dictionary is not provided" Name="in_varNames" Type="InArgument(s:String[])" />
+    <x:Property sap2010:Annotation.AnnotationText="give values only if a dictionary is not provided" Name="in_values" Type="InArgument(s:String[])" />
+    <x:Property Name="in_dict" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1268,1196.8</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>Template_ReplaceVariables_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Allows to expand template strings, filled with runtime template variables {...}&#xA;&#xA;Template strings are extensions of format strings, accepted by String.Format, but with named references.&#xA;Example: normal String.Format template can look like &quot;Consolidated_Master_{0_dd.MM.yyyy}.xlsx&quot;. Current extension allows to use names instead of numbers: &quot;Consolidated_Master{ProcessedDate:dd.MM.yyyy}.xlsx&quot;&#xA;&#xA;There are two mutually exclusive possibilities to specify variables values, which can be used for expansion:&#xA;   1) in_dict - dicitonary variable name -&gt; value&#xA;   2) array in_varNames of valiable names and array in_values of respective values [this options is provided, beacause vb.net does not allow inline construction of dictionaries, while it works with arrays. e.g {&quot;var1&quot;, &quot;var2&quot;}]&#xA;&#xA;Variable names may contain only latin letters, digits, underscore_, minus- and space. All other names are ignored.&#xA;Template may have format specifications, e.g {ProcessedDate:dd.MM.yyyy} -- actually, everything supported by String.Format[as it is called internally]" DisplayName="Template_ReplaceVariables" sap:VirtualizedContainerService.HintSize="681.6,1032" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:Object)" Name="dict" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:Boolean)" Name="templateVars" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:CheckTrue DisplayName="Check if exactly one of dictionary or variable names is not nothing" ErrorMessage="exactly one of in_dict and in_varNames should be specified" Expression="[in_dict IsNot Nothing Xor in_varNames IsNot Nothing]" sap:VirtualizedContainerService.HintSize="640,88" sap2010:WorkflowViewState.IdRef="CheckTrue_1" />
+    <If Condition="[in_dict Is Nothing]" DisplayName="If a dictionary has not been provided" sap:VirtualizedContainerService.HintSize="640,237.6" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Then>
+        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke BuildDictionary workflow" sap:VirtualizedContainerService.HintSize="333.6,88" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Common\Dictionary\BuildDictionary.xaml">
+          <ui:InvokeWorkflowFile.Arguments>
+            <InArgument x:TypeArguments="s:String[]" x:Key="in_varNames">[in_varNames]</InArgument>
+            <InArgument x:TypeArguments="s:String[]" x:Key="in_values">[in_values]</InArgument>
+            <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="out_dict">[dict]</OutArgument>
+          </ui:InvokeWorkflowFile.Arguments>
+        </ui:InvokeWorkflowFile>
+      </If.Then>
+      <If.Else>
+        <Assign DisplayName="Assign the existing dictionary given" sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+          <Assign.To>
+            <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)">[dict]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)">[in_dict]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Else>
+    </If>
+    <ui:InvokeCode ContinueOnError="{x:Null}" Code="out_templateVars = New Dictionary(Of String, Boolean)(StringComparer.InvariantCultureIgnoreCase)&#xA;&#xA;'we make regVar static and compiled for performance improvement &#xA;' regVar matches {varName:format}=like literals. Format is optional&#xA;Static regVar As System.Text.RegularExpressions.Regex&#xA;If regVar Is Nothing Then&#xA;&#x9;regVar = New System.Text.RegularExpressions.Regex(&#xA;&#x9;&quot;\{([A-Za-z0-9_ -]+)(:[^}]*)?\}&quot;,&#xA;&#x9;System.Text.RegularExpressions.RegexOptions.Compiled&#xA;&#x9;)&#xA;End If&#xA;&#xA;Dim matches As System.Text.RegularExpressions.MatchCollection&#xA;'stringbuilder is used for better performance&#xA;Dim sb As New System.Text.StringBuilder(in_template.Length*2)&#xA;&#xA;'get all matches&#xA;'it is guaranteed, that they come in string-order&#xA;'and not shuffled&#xA;matches = regVar.Matches(in_template)&#xA;Dim posLast As Integer = 0&#xA;For Each m As System.Text.RegularExpressions.Match In matches&#xA;&#x9;Dim varName As String = m.Groups(1).Value&#xA;&#x9;'if variable not available in dictionary, skip&#xA;&#x9;If Not in_dict.ContainsKey(varName) Then&#xA;&#x9;&#x9;out_templateVars(varName) = False&#xA;&#x9;&#x9;Continue For&#xA;&#x9;Else&#xA;&#x9;&#x9;out_templateVars(varName) = True&#xA;&#x9;End If&#xA;&#x9;&#xA;&#x9;Dim pos As Integer = m.Groups(0).Index&#xA;&#x9;'append symbols between last match and current&#xA;&#x9;If pos &gt; posLast Then&#xA;&#x9;&#x9;sb.Append(in_template, posLast, pos-posLast)&#xA;&#x9;End If&#xA;&#x9;&#xA;&#x9;Dim values As Object = in_dict(varName)&#xA;&#x9;'format provided? group(2)&#xA;&#x9;If values IsNot Nothing Then&#xA;&#x9;&#x9;If m.Groups(2).Success Then&#xA;&#x9;&#x9;&#x9;sb.AppendFormat(&#xA;&#x9;&#x9;&#x9;&quot;{0&quot;+m.Groups(2).Value+&quot;}&quot;,&#xA;&#x9;&#x9;&#x9;values&#xA;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;Else&#xA;&#x9;&#x9;&#x9;sb.Append(values.ToString)&#xA;&#x9;&#x9;End If&#xA;&#x9;End If&#xA;&#x9;posLast = pos +m.Groups(0).Length&#xA;Next&#xA;&#xA;'we might need to append the remaining of the string&#xA;If posLast &lt; in_template.Length Then&#xA;&#x9;sb.Append(in_template, posLast, in_template.Length-posLast)&#xA;End If&#xA;&#xA;out_res = sb.ToString&#xA;" DisplayName="Invoke code" sap:VirtualizedContainerService.HintSize="640,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+      <ui:InvokeCode.Arguments>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_dict">[dict]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_template">[in_template]</InArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_res">[out_res]</OutArgument>
+        <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Boolean)" x:Key="out_templateVars">[templateVars]</OutArgument>
+      </ui:InvokeCode.Arguments>
+    </ui:InvokeCode>
+    <ui:LogMessage DisplayName="Log Message (template variables)" sap:VirtualizedContainerService.HintSize="640,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;TemplateVars&quot; + vbNewLine +&#xA;String.Join(vbNewLine, &#xA;templateVars.Select(Function(pair) pair.Key + &quot;: &quot; + pair.Value.ToString))]" />
+  </Sequence>
+</Activity>
