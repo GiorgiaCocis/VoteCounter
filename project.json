@@ -1,14 +1,17 @@
 {
-  "name": "Framework_Performer_NoQueue",
-  "description": "Robotic Enterprise Framework - Performer No Queue",
+  "name": "VoteCounter",
+  "description": "Counts the votes from scanned pdf files.",
   "main": "Main.xaml",
   "dependencies": {
+    "Compression.Activities": "[1.0.5]",
     "UiPath.Excel.Activities": "[2.9.3]",
+    "UiPath.IntelligentOCR.Activities": "[4.13.2]",
     "UiPath.Mail.Activities": "[1.9.3]",
     "UiPath.System.Activities": "[20.10.1]",
     "UiPath.UIAutomation.Activities": "[20.10.6]"
   },
   "webServices": [],
+  "entitiesStores": [],
   "schemaVersion": "4.0",
   "studioVersion": "19.10.4.0",
   "projectVersion": "1.0.0",
@@ -22,7 +25,9 @@
       "Private:*",
       "*password*"
     ],
-    "executionType": "Workflow"
+    "executionType": "Workflow",
+    "readyForPiP": false,
+    "startsInPiP": false
   },
   "designOptions": {
     "projectProfile": "Developement",
@@ -31,7 +36,23 @@
       "includeOriginalXaml": false,
       "privateWorkflows": []
     },
-    "fileInfoCollection": []
+    "processOptions": {
+      "ignoredFiles": []
+    },
+    "fileInfoCollection": [],
+    "modernBehavior": false
   },
-  "expressionLanguage": "VisualBasic"
+  "expressionLanguage": "VisualBasic",
+  "entryPoints": [
+    {
+      "filePath": "Main.xaml",
+      "uniqueId": "0b8e402c-a017-4311-a60b-decc78447892",
+      "input": [],
+      "output": []
+    }
+  ],
+  "isTemplate": false,
+  "templateProjectData": {},
+  "publishData": {},
+  "targetFramework": "Legacy"
 }
